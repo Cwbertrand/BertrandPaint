@@ -2,15 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -58,6 +60,25 @@ class User
      * @ORM\OneToMany(targetEntity=Blogpost::class, mappedBy="user", orphanRemoval=true)
      */
     private $blogposts;
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function getSalt()
+    {
+        // leaving blank - I don't need/have a password!
+    }
+    public function getUserIdentifier()
+    {
+        // leaving blank - I don't need/
+    }
+    
+    public function eraseCredentials()
+    {
+        // leaving blank - I don't need/have a password!
+    }
 
     public function __construct()
     {
