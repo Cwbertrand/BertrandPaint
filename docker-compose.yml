@@ -16,6 +16,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: main
+      MYSQL_USER: main
+    networks:
+      - default
     ports:
       # To allow the host machine to access the ports below, modify the lines below.
       # For example, to allow the host to connect to port 3306 on the container, you would change
@@ -24,6 +27,32 @@ services:
       - '3306'
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   restart: always
+  #   container_name: phpmyadmin
+  #   depends_on:
+  #     - mysql
+  #   port:
+  #     - "8081:80"
+  #   environment:
+  #     PMA_HOST: mysql
+  #     MYSQL_ROOT_PASSWORD: password
+  #   networks:
+  #     - symfony
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 3306:80
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+  # define your network where all containers are connected to each other
+      - default
+      
+
 ###< doctrine/doctrine-bundle ###
 
 volumes:

@@ -61,6 +61,11 @@ class User implements UserInterface
      */
     private $blogposts;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $telephone;
+
     public function getRoles()
     {
         return ['ROLE_USER'];
@@ -219,6 +224,18 @@ class User implements UserInterface
                 $blogpost->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }
