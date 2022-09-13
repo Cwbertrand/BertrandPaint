@@ -253,7 +253,7 @@ class Peinture
         return $this->Category;
     }
 
-    public function setCategory(Category $category): self
+    public function addCategory(Category $category): self
     {
         if (!$this->Category->contains($category)) {
             $this->Category[] = $category;
